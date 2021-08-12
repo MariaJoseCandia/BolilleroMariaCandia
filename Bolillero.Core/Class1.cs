@@ -30,7 +30,16 @@ namespace Bolillero.Core
        }
        public byte SacarBolilla()
        {
-           
+           byte indiceAzar = (byte)r.Next(0, Adentro.Count);
+           byte bolilla = Adentro [indiceAzar];
+           Adentro.RemoveAt(indiceAzar);
+           Afuera.Add(bolilla);
+           return bolilla;
+       }
+       public void RellenarBolillero()
+       {
+           Adentro.AddRange(Afuera);
+           Afuera.Clear();
        }
     }
 }
