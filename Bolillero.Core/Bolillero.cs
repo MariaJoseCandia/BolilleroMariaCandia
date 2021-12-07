@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Bolillero.Core
 {
-    public class Bolillero
+    public class Bolillero : ICloneable
     {
        byte Cantidad { get; set; }
        public int CantidadFuera => Afuera.Count;
@@ -20,7 +20,17 @@ namespace Bolillero.Core
            r = new Random(DateTime.Now.Millisecond);
        }
 
-       public Bolillero(byte cantidad) : this() => this.Llenar(cantidad);
+       public Bolillero(byte cantidad) : this()
+       {
+           this.Llenar(cantidad);
+       }
+
+       private Bolillero(Bolillero original)
+       {
+           Afuera = new List<byte>(original.Afuera);
+           Adentro = new List<byte>(original.Adentro);
+           r = new Random(DateTime.Now.Millisecond);
+       }
 
        private void Llenar(byte cantidad)
        {
@@ -69,6 +79,11 @@ namespace Bolillero.Core
                }
            }
            return contador;
+       }
+       
+       public object Clone()
+       {
+           return new Bolillero(this);
        }
        
     }
